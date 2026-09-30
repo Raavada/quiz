@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Genius Jungle - Kids Quiz (Class 1-5, CBSE / ICSE)</title>
+<title>Infinity Learn by Sri Chaitanya - Kids Quiz</title>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--saf:#ff9f1c;--pink:#ff4d8d;--teal:#0ea5a4;--ind:#4338ca;--cream:#fff8e7;--ink:#2b2350;--ok:#16a34a;--bad:#e11d48}
+:root{--saf:#ff9f1c;--pink:#ff4d8d;--teal:#0ea5a4;--ind:#4338ca;--cream:#fff8e7;--ink:#2b2350;--ok:#16a34a;--bad:#e11d48;--il-blue:#0072ce}
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Baloo 2','Segoe UI',Tahoma,sans-serif}
 body{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px));color:var(--ink);
 background:linear-gradient(135deg,#ffd166,#ff8fab 55%,#a78bfa);background-attachment:fixed}
@@ -16,9 +16,35 @@ background:linear-gradient(135deg,#ffd166,#ff8fab 55%,#a78bfa);background-attach
 .ctl button.off{opacity:.4}
 .screen{display:none}.screen.on{display:block;animation:pop .35s}
 @keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
-h1{font-size:2.3rem;font-weight:800;text-align:center;line-height:1.1;color:var(--ind)}
+
+/* Infinity Learn Brand Banner */
+.brand-banner {
+  background: var(--il-blue);
+  color: #ffffff;
+  border: 3px solid var(--ink);
+  border-radius: 18px;
+  padding: 12px 16px;
+  text-align: center;
+  margin-bottom: 16px;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.brand-banner h1 {
+  color: #ffffff;
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+  text-shadow: 2px 2px 0 var(--ink);
+}
+.brand-banner .by-text {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  opacity: 0.95;
+  margin-top: 2px;
+}
+
 .sub{text-align:center;margin:6px 0 14px;font-weight:500}
-.hero{font-size:3.4rem;text-align:center;animation:bob 2s infinite ease-in-out}
+.hero{font-size:3rem;text-align:center;animation:bob 2s infinite ease-in-out;margin-bottom:4px}
 @keyframes bob{50%{transform:translateY(-8px) rotate(-4deg)}}
 .lab{font-weight:800;margin:10px 0 6px}
 .seg{display:flex;gap:8px;flex-wrap:wrap}
@@ -43,7 +69,7 @@ h1{font-size:2.3rem;font-weight:800;text-align:center;line-height:1.1;color:var(
 #vis{justify-content:center;align-items:center;background:#fff;border:3px dashed var(--ind);border-radius:18px;margin:8px 0 14px;padding:10px;min-height:90px}
 .em{font-size:2.1rem;text-align:center;line-height:1.3;word-break:break-word}
 .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:480px){.opts{grid-template-columns:1fr}h1{font-size:1.9rem}.top{padding-right:0;margin-top:40px}}
+@media(max-width:480px){.opts{grid-template-columns:1fr}.top{padding-right:0;margin-top:40px}}
 .opt{padding:12px;border:3px solid var(--ink);border-radius:16px;background:#fff;font-size:1.25rem;font-weight:800;cursor:pointer;color:var(--ink);transition:transform .15s}
 .opt::first-letter{text-transform:uppercase}
 .opt:hover:not(:disabled){background:#e0e7ff;transform:translateY(-3px)}
@@ -73,8 +99,11 @@ h1{font-size:2.3rem;font-weight:800;text-align:center;line-height:1.1;color:var(
 </div>
 
 <div class="screen on" id="s0">
-  <div class="hero">🦁</div>
-  <h1>Genius Jungle!</h1>
+  <div class="hero">♾️</div>
+  <div class="brand-banner">
+    <h1>Infinity Learn</h1>
+    <div class="by-text">by Sri Chaitanya Educational Institutions</div>
+  </div>
   <p class="sub">Roar through Maths, English &amp; EVS and collect stickers 🎉</p>
   <div class="lab">Subject</div>
   <div class="seg">
@@ -84,8 +113,8 @@ h1{font-size:2.3rem;font-weight:800;text-align:center;line-height:1.1;color:var(
   </div>
   <div class="lab">Class</div>
   <div class="seg">
-    <button onclick="sel('cls','Class 1',this)">1</button>
-    <button class="on" onclick="sel('cls','Class 2',this)">2</button>
+    <button class="on" onclick="sel('cls','Class 1',this)">1</button>
+    <button onclick="sel('cls','Class 2',this)">2</button>
     <button onclick="sel('cls','Class 3',this)">3</button>
     <button onclick="sel('cls','Class 4',this)">4</button>
     <button onclick="sel('cls','Class 5',this)">5</button>
@@ -130,7 +159,7 @@ h1{font-size:2.3rem;font-weight:800;text-align:center;line-height:1.1;color:var(
 </div>
 
 <script>
-const S={sub:'Maths',cls:'Class 2',brd:'CBSE',cnt:10};
+const S={sub:'Maths',cls:'Class 1',brd:'CBSE',cnt:10};
 let rng,Q=[],i=0,sc=0,st=0,ok=0,done=false,AC,mute=false,musOn=true,bg,stk=[];
 const $=id=>document.getElementById(id);
 const ri=(a,b)=>a+Math.floor(rng()*(b-a+1)),pk=a=>a[ri(0,a.length-1)];
@@ -156,21 +185,22 @@ const pie=(n,k)=>{let s='';for(let j=0;j<n;j++){const a=j*2*Math.PI/n,b=(j+1)*2*
 const rect=(l,w,u)=>`<svg width="230" viewBox="0 0 230 130"><rect x="40" y="25" width="${l*10}" height="${w*7}" fill="#c7d2fe" stroke="#4338ca" stroke-width="3"/><text x="${40+l*5}" y="18" text-anchor="middle" font-weight="bold" font-size="13">${l} ${u}</text><text x="${46+l*10}" y="${25+w*3.5}" font-weight="bold" font-size="13">${w} ${u}</text></svg>`;
 const frs=(n,k)=>[`${n-k}/${n}`,`${k}/${n+1}`,`${k+1}/${n}`,`${k}/${n+2}`,`1/${n}`];
 
+/* ---------- CLASS 1 SCREENSHOT QUESTIONS ---------- */
+const getC1Questions = () => [
+  mk('If Rahul has 5 apples and gives 2 to his friend, how many apples does Rahul have left?', em('🍎🍎🍎🍎🍎'), '3', ['2', '4', '5'], ['Subtraction 🍎', ['Start with 5 apples.', 'Take away 2: 5 − 2 = 3.']]),
+  mk('Which shape looks like a box or a dice?', '', 'Cube', ['Circle', 'Square', 'Triangle'], ['3D Shapes 🎲', ['A box or dice is 3D and has 6 square faces, so it is a cube.']]),
+  mk('Which part of a plant stays under the soil and drinks water?', '', 'Roots', ['Stem', 'Leaves', 'Flower'], ['Plant Parts 🌿', ['Roots grow underground to absorb water and nutrients.']]),
+  mk('Fill in the blank with a, an, or the: "I saw ___ elephant at the zoo."', '', 'an', ['a', 'the', 'none'], ['Articles 🐘', ['Use "an" before words that start with a vowel sound like "elephant".']]),
+  mk('Rahul studies in ___ University.', '', 'a', ['an', 'the', 'none'], ['Articles 🎓', ['"University" starts with a "yoo" consonant sound, so we use "a".']]),
+  mk('Which word in this sentence is a naming word (noun): "The cat is sleeping"?', '', 'cat', ['sleeping', 'The', 'is'], ['Nouns 🐱', ['A noun names an animal, person, place, or thing. Here "cat" is the noun.']]),
+  mk('How many colours are in a Rainbow? Can you name them all?', '', '7', ['5', '6', '8'], ['Rainbow 🌈', ['A rainbow has 7 colors: VIBGYOR (Violet, Indigo, Blue, Green, Yellow, Orange, Red).']]),
+  mk('If I cut a cake 3 times, can I get 8 pieces? If yes, then how?', '', 'Yes, by cutting 2 times vertically and 1 time horizontally through the middle', ['No, it is impossible', 'Yes, by cutting 3 times vertically', 'Yes, by cutting diagonally only'], ['Cake Puzzle 🎂', ['Cutting 2 times vertically makes 4 pieces.', 'Cutting once horizontally cuts all 4 pieces in half, giving 8 pieces!']]),
+  mk('Which animal is called the ship of the desert?', '', 'Camel', ['Elephant', 'Lion', 'Horse'], ['Desert Animals 🐫', ['Camels can travel long distances in hot sand with little water.']]),
+  mk('Do you know what is a prime number? Can you tell all the prime numbers b/w 1-10?', '', '2, 3, 5, 7', ['1, 2, 3, 5', '2, 4, 6, 8', '3, 5, 7, 9'], ['Prime Numbers 🔢', ['Prime numbers have only 2 factors: 1 and themselves.', 'Between 1 and 10, the prime numbers are 2, 3, 5, and 7.']])
+];
+
 /* ---------- MATHS ---------- */
 const G={
-'Class 1':[
-()=>{const[e,p]=pk(IT),n=ri(2,12);return mk(`How many ${p} can you see?`,em(e.repeat(n)),n,near(n,1),['Let\'s count! 🔢',['Point to each one and count: 1, 2, 3 …',`There are ${n} ${p}.`]])},
-()=>{const[e,p]=pk(IT),a=ri(1,9),b=ri(1,10);return mk(`${nm()} has ${a} ${p}. A friend gives ${b} more. How many now?`,em(e.repeat(a)+' ➕ '+e.repeat(b)),a+b,near(a+b,1),['Add them up! ➕',[`Start with ${a}.`,`Count ${b} more: ${a} + ${b} = ${a+b}.`]])},
-()=>{const[e,p]=pk(IT),a=ri(5,20),b=ri(1,a-1);return mk(`${nm()} had ${a} ${p} and gave ${b} away. How many are left?`,em(e.repeat(a)),a-b,near(a-b),['Take away! ➖',[`Start with ${a}.`,`Take away ${b}: ${a} − ${b} = ${a-b}.`]])},
-()=>{const t=ri(0,2),n=ri(3,98);return t==0?mk(`Which number comes just after ${n}?`,'',n+1,near(n+1),['After means +1 ➡️',[`${n} + 1 = ${n+1}.`]]):t==1?mk(`Which number comes just before ${n}?`,'',n-1,near(n-1),['Before means −1 ⬅️',[`${n} − 1 = ${n-1}.`]]):mk(`Fill in the blank: ${n-1}, __ , ${n+1}`,'',n,near(n),['Number neighbours 🏘️',[`The number between ${n-1} and ${n+1} is ${n}.`]])},
-()=>{const x=ri(1,99);let y=ri(1,99);if(y==x)y++;const b=ri(0,1);return mk(`Which number is ${b?'bigger':'smaller'}: ${x} or ${y}?`,'',b?Math.max(x,y):Math.min(x,y),[x,y],['Compare! ⚖️',[`Look at ${x} and ${y}.`,`The ${b?'bigger':'smaller'} one is ${b?Math.max(x,y):Math.min(x,y)}.`]])},
-()=>{const k=pk(Object.keys(SHP)),c=pk(['#ef4444','#3b82f6','#22c55e','#f59e0b','#a855f7','#ec4899']);return mk('What is the name of this shape?',`<svg width="110" viewBox="0 0 100 100">${SHP[k](c)}</svg>`,k,Object.keys(SHP),['Know your shapes! 🔷',['Look at the sides and corners.',`This shape is a ${k}.`]])},
-()=>{const j=ri(0,6),f=ri(0,1),a=D[(j+(f?1:6))%7];return mk(`Which day comes ${f?'after':'before'} ${D[j]}?`,'',a,sh(D.filter(x=>x!=a&&x!=D[j])),['Days of the week 📅',[D.join(', ')+'.',`${f?'After':'Before'} ${D[j]} comes ${a}.`]])},
-()=>{const n=ri(10,99),t=ri(0,1),a=t?Math.floor(n/10):n%10;return mk(`In the number ${n}, which digit is in the ${t?'tens':'ones'} place?`,'',a,[t?n%10:Math.floor(n/10),(a+1)%10,(a+3)%10,(a+7)%10],['Tens and ones 🔟',[`${n} has ${Math.floor(n/10)} tens and ${n%10} ones.`,`The ${t?'tens':'ones'} digit is ${a}.`]])},
-()=>{const a=pk([1,2,5,10]),b=pk([1,2,5,10]);return mk(`${nm()} has a ₹${a} coin and a ₹${b} coin. How much money in all?`,em(`🪙₹${a} ➕ 🪙₹${b}`),`₹${a+b}`,near(a+b,1).map(x=>'₹'+x),['Count the coins 🪙',[`₹${a} + ₹${b} = ₹${a+b}.`]])},
-()=>{const s=pk([2,5,10]),a=s*ri(1,3),q=[0,1,2,3].map(k=>a+k*s),n=a+4*s;return mk(`What comes next? ${q.join(', ')}, __`,'',n,near(n),['Skip counting 🐸',[`We add ${s} each time.`,`${q[3]} + ${s} = ${n}.`]])},
-()=>{const n=ri(1,60);return mk(`Is ${n} an even or an odd number?`,'',n%2?'odd':'even',['odd','even'],['Even or odd? 👯',[`Even numbers end in 0, 2, 4, 6, 8.`,`${n} is ${n%2?'odd':'even'}.`]])}
-],
 'Class 2':[
 ()=>{const a=ri(11,60),b=ri(11,39);return mk(`${a} + ${b} = ?`,'',a+b,near(a+b),['Add tens and ones ➕',[`Ones: ${a%10} + ${b%10} = ${a%10+b%10}.`,`Tens: ${a-a%10} + ${b-b%10} = ${a+b-a%10-b%10}.`,`Total = ${a+b}.`]])},
 ()=>{const a=ri(30,99),b=ri(10,a-5);return mk(`${a} − ${b} = ?`,'',a-b,near(a-b),['Subtract ➖',[`Take away ${b} from ${a}.`,`${a} − ${b} = ${a-b}.`]])},
@@ -227,7 +257,7 @@ const G={
 ()=>{const s=pk([40,50,60,80]),t=ri(2,5);return mk(`A car goes ${s} km every hour. How far will it go in ${t} hours?`,'',`${s*t} km`,near(s*t,1).map(x=>x+' km'),['Distance 🚗',['Distance = speed × time.',`${s} × ${t} = ${s*t} km.`]])}
 ]};
 
-/* ---------- ENGLISH and EVS (question|answer|wrong1|wrong2|wrong3|fun fact) ---------- */
+/* ---------- ENGLISH and EVS ---------- */
 const bk=L=>()=>{const[t,a,x,y,z,e]=pk(L).split('|');return mk(t,'',a,[x,y,z],['Let\'s learn! 💡',[e]])};
 const OP={A:'hot-cold,big-small,up-down,day-night,happy-sad,fast-slow,open-close,hard-soft',B:'hot-cold,big-small,early-late,empty-full,strong-weak,brave-scared,clean-dirty,rich-poor,light-heavy',C:'ancient-modern,generous-selfish,victory-defeat,expand-shrink,increase-decrease,accept-refuse,include-exclude,arrive-depart'};
 const op=b=>()=>{const L=OP[b].split(','),p=pk(L).split('-'),f=ri(0,1),w=p[f],a=p[1-f];return mk(`What is the opposite of "${w}"?`,'',a,sh(L.join('-').split('-').filter(x=>x!=w&&x!=a)),['Opposites 🔄',[`${w} ↔ ${a}`]])};
@@ -237,12 +267,19 @@ const EA=['A cat says __.|meow|moo|woof|quack|A cat says meow 🐱','Which one i
 const EB=['They __ playing in the park.|are|is|am|was|Use "are" with they, we and you.','Which is a noun?|Elephant|Quickly|Jump|Bright|A noun names a person, place, animal or thing.','Which is a verb (action word)?|Run|Table|Blue|Tall|Verbs show actions.','He __ to school daily.|goes|go|going|gone|Use "goes" with he, she and it.','Which is an adjective?|Beautiful|Sing|Slowly|Table|Adjectives describe nouns.','Yesterday I __ to the market.|went|go|goes|going|"Went" is the past of "go".','A group of birds is called a __.|flock|herd|pack|pride|A group of birds is a flock 🐦'];
 const EC=['Which word is an adverb?|Quickly|Quick|Quicker|Quickest|Adverbs tell how an action is done.','Which sentence is in the past tense?|We played cricket.|We play cricket.|We will play cricket.|We are playing cricket.|"Played" is the past form.','Neither of the boys __ late.|was|were|are|be|"Neither" takes a singular verb.','A group of lions is called a __.|pride|herd|flock|pack|A group of lions is a pride 🦁','Which mark ends a question?|?|.|!|,|A question mark ends a question.','Which is a synonym (same meaning) of "big"?|Huge|Tiny|Thin|Short|Huge means very big.','She is __ than her sister. (tall)|taller|tallest|more tall|most tall|Add -er to compare two people.'];
 const VA=['Which animal gives us milk?|Cow|Lion|Snake|Eagle|Cows give us milk 🐄','We see with our __.|eyes|ears|nose|hands|Eyes help us see 👀','Which one is a fruit?|Mango|Potato|Onion|Carrot|Mango is a sweet fruit 🥭','Which is our national bird?|Peacock|Crow|Sparrow|Parrot|The peacock is India\'s national bird 🦚','Plants need __ to grow.|water and sunlight|toys|sweets|plastic|Plants drink water and love sunlight 🌱','Which season is the hottest?|Summer|Winter|Spring|Autumn|Summer is hot ☀️'];
-const VB=['Which is our national animal?|Tiger|Lion|Elephant|Deer|The tiger is India\'s national animal 🐯','Which gas do we breathe in?|Oxygen|Carbon dioxide|Smoke|Helium|We need oxygen to live.','The Sun is a __.|star|planet|moon|comet|The Sun is a star ☀️','Which organ pumps blood?|Heart|Lungs|Brain|Stomach|The heart pumps blood ❤️','Which part of a plant takes water from the soil?|Roots|Leaves|Flowers|Fruits|Roots drink water 🌿','Which of these is a herbivore (plant eater)?|Cow|Lion|Tiger|Crocodile|Cows eat grass and plants.','Water freezes into __.|ice|steam|smoke|dew|Freezing water becomes ice 🧊'];
-const VC=['What is the capital of India?|New Delhi|Mumbai|Kolkata|Chennai|New Delhi is India\'s capital 🏛️️','Which is the largest planet?|Jupiter|Earth|Mars|Venus|Jupiter is the biggest planet 🪐','Plants make food by __.|photosynthesis|digestion|evaporation|melting|Photosynthesis uses sunlight, water and air.','Which vitamin do we get from sunlight?|Vitamin D|Vitamin C|Vitamin A|Vitamin B|Sunlight gives us Vitamin D ☀️','Which gas do plants take in?|Carbon dioxide|Oxygen|Nitrogen|Hydrogen|Plants breathe in carbon dioxide.','Who is called the Father of the Nation?|Mahatma Gandhi|Jawaharlal Nehru|Subhas Bose|Sardar Patel|Gandhiji led India\'s freedom movement.','Which is the longest river in India?|Ganga|Yamuna|Godavari|Narmada|The Ganga is India\'s longest river 🌊'];
+const VB=['Which is our national animal?|Tiger|Lion|Elephant|Deer|The tiger is India\'s national animal 🐯','Which gas do we breathe in?|Oxygen|Carbon dioxide|Smoke|Helium|We need oxygen to live.','The Sun is a __.|star|planet|moon|comet|The Sun is a star ☀','Which organ pumps blood?|Heart|Lungs|Brain|Stomach|The heart pumps blood ❤️','Which part of a plant takes water from the soil?|Roots|Leaves|Flowers|Fruits|Roots drink water 🌿','Which of these is a herbivore (plant eater)?|Cow|Lion|Tiger|Crocodile|Cows eat grass and plants.','Water freezes into __.|ice|steam|smoke|dew|Freezing water becomes ice 🧊'];
+const VC=['What is the capital of India?|New Delhi|Mumbai|Kolkata|Chennai|New Delhi is India\'s capital 🏛','Which is the largest planet?|Jupiter|Earth|Mars|Venus|Jupiter is the biggest planet 🪐','Plants make food by __.|photosynthesis|digestion|evaporation|melting|Photosynthesis uses sunlight, water and air.','Which vitamin do we get from sunlight?|Vitamin D|Vitamin C|Vitamin A|Vitamin B|Sunlight gives us Vitamin D ☀️','Which gas do plants take in?|Carbon dioxide|Oxygen|Nitrogen|Hydrogen|Plants breathe in carbon dioxide.','Who is called the Father of the Nation?|Mahatma Gandhi|Jawaharlal Nehru|Subhas Bose|Sardar Patel|Gandhiji led India\'s freedom movement.','Which is the longest river in India?|Ganga|Yamuna|Godavari|Narmada|The Ganga is India\'s longest river 🌊'];
 const bnd=()=>{const c=+S.cls.slice(-1);return c<3?'A':c==3?'B':'C'};
-const gens=()=>{if(S.sub=='Maths')return G[S.cls];const b=bnd();return S.sub=='English'?[bk({A:EA,B:EB,C:EC}[b]),bk({A:EA,B:EB,C:EC}[b]),op(b),pl(b)]:[bk({A:VA,B:VB,C:VC}[b])]};
+const gens=()=>{
+  if(S.sub=='Maths')return G[S.cls];
+  const b=bnd();
+  return S.sub=='English'?[bk({A:EA,B:EB,C:EC}[b]),bk({A:EA,B:EB,C:EC}[b]),op(b),pl(b)]:[bk({A:VA,B:VB,C:VC}[b])];
+};
 
 function build(){
+  if(S.cls=='Class 1'){
+    return getC1Questions();
+  }
   rng=seed((+S.cls.slice(-1))*97+(S.brd=='CBSE'?1:2)*1013+['Maths','English','EVS'].indexOf(S.sub)*31+Date.now());
   const g=gens(),seen=new Set(),out=[];
   for(let n=0;n<4000&&out.length<50;n++){const q=g[ri(0,g.length-1)]();const k=q.t+q.v;if(!seen.has(k)){seen.add(k);q.pts=10;out.push(q)}}
@@ -255,7 +292,7 @@ function show(id){
   if(id!='s1')bgm(0)
 }
 
-/* ---------- SOUND: soft xylophone chimes, gentle music and a cheering voice ---------- */
+/* ---------- SOUND SYSTEM ---------- */
 const ac=()=>AC=AC||new(window.AudioContext||window.webkitAudioContext)();
 function note(f,t,d,type='sine',v=.15){try{const c=ac(),o=c.createOscillator(),g=c.createGain(),s=c.currentTime+t;o.type=type;o.frequency.value=f;o.connect(g);g.connect(c.destination);g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(v,s+.02);g.gain.exponentialRampToValueAtTime(.001,s+d);o.start(s);o.stop(s+d+.05)}catch(e){}}
 function play(k,n=0){if(mute)return;try{ac().resume()}catch(e){}
@@ -272,7 +309,7 @@ function tg(w){if(w=='snd'){mute=!mute;if(mute&&window.speechSynthesis)speechSyn
 
 function confetti(n){for(let k=0;k<n;k++){const s=document.createElement('span');s.className='fall';s.textContent=rp(['🎉','⭐','🪔','🌸','✨','🎈']);s.style.left=Math.random()*100+'vw';s.style.animationDuration=1.5+Math.random()*2+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),3800)}}
 
-/* ---------- GAME ---------- */
+/* ---------- GAME CONTROLS ---------- */
 const ST=['🦁','🐯','🐘','🦚','🐼','🦄','🐬','🦋','🌟','🍭','🚀','🏅'];
 const CHEER=['Shabash!','Wah! Kya baat hai!','Bahut badhiya!','Zabardast!','Superb!','Well done!'];
 const STREAK={2:'2 in a row! You are on fire! 🔥',3:'Hat-trick! Three in a row! 🎩⭐',4:'Four! You are unstoppable! 🚀',5:'FIVE in a row! Jungle King! 👑'};
@@ -296,7 +333,7 @@ function quitToHome(){
 }
 
 function start(){
-  Q=shr(build()).slice(0,S.cnt);i=0;sc=0;st=0;ok=0;stk=[];
+  Q=(S.cls=='Class 1'?build():shr(build())).slice(0,S.cnt);i=0;sc=0;st=0;ok=0;stk=[];
   $('bd').textContent=`${S.sub=='EVS'?'EVS & GK':S.sub} • ${S.cls} • ${S.brd}`;
   show('s1');play('tap');bgm();load();talk('Let\'s go, champ!');
 }
