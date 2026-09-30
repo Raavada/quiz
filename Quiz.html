@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Genius Jungle - Kids Quiz (Class 1-5, CBSE / ICSE)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--saf:#ff9f1c;--pink:#ff4d8d;--teal:#0ea5a4;--ind:#4338ca;--cream:#fff8e7;--ink:#2b2350;--ok:#16a34a;--bad:#e11d48}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Baloo 2','Segoe UI',Tahoma,sans-serif}
+body{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px));color:var(--ink);
+background:linear-gradient(135deg,#ffd166,#ff8fab 55%,#a78bfa);background-attachment:fixed}
+.card{background:var(--cream);border:4px solid var(--ink);border-radius:28px;box-shadow:8px 8px 0 var(--ink);width:100%;max-width:640px;padding:24px;position:relative}
+.ctl{position:absolute;top:10px;right:12px;display:flex;gap:6px;z-index:2}
+.ctl button{width:38px;height:38px;border:3px solid var(--ink);border-radius:50%;background:#fff;font-size:1.1rem;cursor:pointer}
+.ctl button.off{opacity:.4}
+.screen{display:none}.screen.on{display:block;animation:pop .35s}
+@keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+h1{font-size:2.3rem;font-weight:800;text-align:center;line-height:1.1;color:var(--ind)}
+.sub{text-align:center;margin:6px 0 14px;font-weight:500}
+.hero{font-size:3.4rem;text-align:center;animation:bob 2s infinite ease-in-out}
+@keyframes bob{50%{transform:translateY(-8px) rotate(-4deg)}}
+.lab{font-weight:800;margin:10px 0 6px}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg button{flex:1;min-width:64px;padding:9px 6px;border:3px solid var(--ink);border-radius:14px;background:#fff;font-size:1.02rem;font-weight:700;cursor:pointer;color:var(--ink)}
+.seg button.on{background:var(--saf);box-shadow:3px 3px 0 var(--ink)}
+.big{width:100%;margin-top:16px;padding:14px;border:3px solid var(--ink);border-radius:16px;background:var(--pink);color:#fff;font-size:1.3rem;font-weight:800;cursor:pointer;box-shadow:4px 4px 0 var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:800;flex-wrap:wrap;padding-right:170px}
+.pill{background:var(--ind);color:#fff;padding:3px 12px;border-radius:20px;font-size:.9rem}
+.pill.s{background:var(--teal)}.pill.f{background:var(--saf);color:var(--ink)}
+.bar{height:14px;background:#fff;border:3px solid var(--ink);border-radius:10px;margin:10px 0 6px;overflow:hidden}
+.bar div{height:100%;width:0;background:repeating-linear-gradient(45deg,var(--teal),var(--teal) 10px,#2dd4bf 10px,#2dd4bf 20px);transition:width .4s}
+#shelf{min-height:26px;font-size:1.2rem;line-height:1.2;margin-bottom:6px}
+#shelf small{font-size:.8rem;font-weight:700;opacity:.7}
+.mas{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.mas span{font-size:2.6rem}
+.mas.hop span{animation:hop .5s}
+@keyframes hop{40%{transform:translateY(-14px) scale(1.2)}}
+.bub{background:#fff;border:3px solid var(--ink);border-radius:16px;padding:6px 12px;font-weight:700;flex:1}
+#qt{font-size:1.35rem;font-weight:700;line-height:1.3;margin:6px 0}
+.rd{border:2px solid var(--ink);border-radius:12px;background:#fff;padding:2px 10px;font-weight:700;cursor:pointer;font-size:.9rem;margin-bottom:4px}
+#vis{justify-content:center;align-items:center;background:#fff;border:3px dashed var(--ind);border-radius:18px;margin:8px 0 14px;padding:10px;min-height:90px}
+.em{font-size:2.1rem;text-align:center;line-height:1.3;word-break:break-word}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:480px){.opts{grid-template-columns:1fr}h1{font-size:1.9rem}.top{padding-right:0;margin-top:40px}}
+.opt{padding:12px;border:3px solid var(--ink);border-radius:16px;background:#fff;font-size:1.25rem;font-weight:800;cursor:pointer;color:var(--ink);transition:transform .15s}
+.opt::first-letter{text-transform:uppercase}
+.opt:hover:not(:disabled){background:#e0e7ff;transform:translateY(-3px)}
+.opt:disabled{cursor:default}
+.opt.ok{background:#bbf7d0;border-color:var(--ok);animation:pop .4s}
+.opt.no{background:#fecdd3;border-color:var(--bad);animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+#ex{display:none;background:#e0f2fe;border:3px solid var(--ink);border-radius:16px;padding:12px 16px;margin-top:14px}
+#ex b{color:var(--ind);font-size:1.1rem}
+#ex li{list-style:none;margin-top:5px;font-weight:500}
+#nx{display:none;animation:pulse 1.2s infinite}
+@keyframes pulse{50%{transform:scale(1.03)}}
+.stars{font-size:3rem;text-align:center;margin:8px 0}
+.haul{font-size:1.6rem;text-align:center;line-height:1.4;word-break:break-word}
+.fall{position:fixed;top:-40px;font-size:1.8rem;pointer-events:none;z-index:9;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="card">
+<div class="ctl">
+  <button id="rst" title="Restart Quiz" style="display:none;" onclick="restartQuiz()">🔄</button>
+  <button id="home" title="Quit to Main Menu" style="display:none;" onclick="quitToHome()">🏠</button>
+  <button id="snd" title="Sound and voice" onclick="tg('snd')">🔊</button>
+  <button id="mus" title="Music" onclick="tg('mus')">🎵</button>
+</div>
+
+<div class="screen on" id="s0">
+  <div class="hero">🦁</div>
+  <h1>Genius Jungle!</h1>
+  <p class="sub">Roar through Maths, English &amp; EVS and collect stickers 🎉</p>
+  <div class="lab">Subject</div>
+  <div class="seg">
+    <button class="on" onclick="sel('sub','Maths',this)">➗ Maths</button>
+    <button onclick="sel('sub','English',this)">📖 English</button>
+    <button onclick="sel('sub','EVS',this)">🌍 EVS &amp; GK</button>
+  </div>
+  <div class="lab">Class</div>
+  <div class="seg">
+    <button onclick="sel('cls','Class 1',this)">1</button>
+    <button class="on" onclick="sel('cls','Class 2',this)">2</button>
+    <button onclick="sel('cls','Class 3',this)">3</button>
+    <button onclick="sel('cls','Class 4',this)">4</button>
+    <button onclick="sel('cls','Class 5',this)">5</button>
+  </div>
+  <div class="lab">Board</div>
+  <div class="seg">
+    <button class="on" onclick="sel('brd','CBSE',this)">CBSE</button>
+    <button onclick="sel('brd','ICSE',this)">ICSE</button>
+  </div>
+  <div class="lab">How many questions?</div>
+  <div class="seg">
+    <button class="on" onclick="sel('cnt',10,this)">Quick 10</button>
+    <button onclick="sel('cnt',25,this)">25</button>
+    <button onclick="sel('cnt',50,this)">Max 50</button>
+  </div>
+  <button class="big" onclick="start()">Let's Play! 🚀</button>
+</div>
+
+<div class="screen" id="s1">
+  <div class="top"><span class="pill" id="bd"></span><span class="pill f" id="stk">🔥 0</span><span class="pill s" id="sc">⭐ 0</span></div>
+  <div class="bar"><div id="pg"></div></div>
+  <div id="shelf"></div>
+  <div class="mas" id="mas"><span>🦁</span><div class="bub" id="say">Let's go!</div></div>
+  <div id="qt"></div>
+  <button class="rd" onclick="talk(Q[i].t)">🔊 Read to me</button>
+  <div id="vis"></div>
+  <div class="opts" id="opts"></div>
+  <div id="ex"><b id="et"></b><ul id="es"></ul></div>
+  <button class="big" id="nx" onclick="next()">Next ➜</button>
+</div>
+
+<div class="screen" id="s2">
+  <div class="hero">🏆</div>
+  <h1 id="rt">Shabash!</h1>
+  <div class="stars" id="rs"></div>
+  <p class="sub" id="rp"></p>
+  <div class="haul" id="hl"></div>
+  <button class="big" onclick="start()">Play Again 🔄</button>
+  <button class="big" style="background:var(--teal)" onclick="quitToHome()">Change Subject / Class</button>
+</div>
+
+</div>
+
+<script>
+const S={sub:'Maths',cls:'Class 2',brd:'CBSE',cnt:10};
+let rng,Q=[],i=0,sc=0,st=0,ok=0,done=false,AC,mute=false,musOn=true,bg,stk=[];
+const $=id=>document.getElementById(id);
+const ri=(a,b)=>a+Math.floor(rng()*(b-a+1)),pk=a=>a[ri(0,a.length-1)];
+const sh=a=>{a=[...a];for(let j=a.length-1;j>0;j--){const k=ri(0,j);[a[j],a[k]]=[a[k],a[j]]}return a};
+const shr=a=>[...a].sort(()=>Math.random()-.5),rp=a=>a[Math.floor(Math.random()*a.length)];
+const seed=s=>()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const uq=a=>[...new Set(a.map(String))];
+const near=(a,mn=0)=>sh([-1,1,-2,2,-3,3,-10,10,-5,5].map(d=>a+d).filter(x=>x>=mn&&x!=a)).slice(0,3);
+const mk=(t,v,a,ds,e)=>{a=String(a);ds=uq(ds).filter(x=>x!==a).slice(0,3);return{t,v,a,o:sh([a,...ds]),e}};
+const em=s=>`<div class="em">${s}</div>`;
+const NM={CBSE:['Aarav','Diya','Rohan','Priya','Kabir','Meera','Arjun','Isha'],ICSE:['Ananya','Vihaan','Sneha','Aditya','Riya','Krish','Tara','Yash']};
+const nm=()=>pk(NM[S.brd]);
+const IT=[['🥭','mangoes'],['🪁','kites'],['🪔','diyas'],['🏏','cricket bats'],['🎈','balloons'],['🍌','bananas'],['🌸','flowers'],['🐘','elephants'],['🦚','peacocks'],['⭐','stars'],['🍬','laddoos'],['🛺','auto-rickshaws']];
+const D=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const MO=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MD=[31,28,31,30,31,30,31,31,30,31,30,31];
+const SHP={circle:c=>`<circle cx="50" cy="50" r="40" fill="${c}"/>`,square:c=>`<rect x="15" y="15" width="70" height="70" fill="${c}"/>`,triangle:c=>`<polygon points="50,10 10,88 90,88" fill="${c}"/>`,rectangle:c=>`<rect x="5" y="28" width="90" height="44" fill="${c}"/>`};
+const RM=['','I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX'];
+const rom=n=>['','X','XX','XXX','XL','L'][n/10|0]+RM[n%10];
+const tm=(h,m)=>`${h}:${String(m).padStart(2,'0')}`;
+const clock=(h,m)=>{const p=(a,l)=>`x2="${50+l*Math.sin(a*Math.PI/180)}" y2="${50-l*Math.cos(a*Math.PI/180)}"`;let n='';for(let k=1;k<=12;k++)n+=`<text x="${50+35*Math.sin(k*Math.PI/6)}" y="${54-35*Math.cos(k*Math.PI/6)}" font-size="9" font-weight="bold" text-anchor="middle">${k}</text>`;return `<svg width="150" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#fff" stroke="#4338ca" stroke-width="3"/>${n}<line x1="50" y1="50" ${p(h%12*30+m/2,22)} stroke="#e11d48" stroke-width="4" stroke-linecap="round"/><line x1="50" y1="50" ${p(m*6,33)} stroke="#2b2350" stroke-width="2.5" stroke-linecap="round"/><circle cx="50" cy="50" r="3"/></svg>`};
+const pie=(n,k)=>{let s='';for(let j=0;j<n;j++){const a=j*2*Math.PI/n,b=(j+1)*2*Math.PI/n,f=x=>`${50+45*Math.sin(x)} ${50-45*Math.cos(x)}`;s+=`<path d="M50 50 L${f(a)} A45 45 0 0 1 ${f(b)}Z" fill="${j<k?'#ff9f1c':'#fff1c9'}" stroke="#2b2350" stroke-width="2"/>`}return `<svg width="150" viewBox="0 0 100 100">${s}</svg>`};
+const rect=(l,w,u)=>`<svg width="230" viewBox="0 0 230 130"><rect x="40" y="25" width="${l*10}" height="${w*7}" fill="#c7d2fe" stroke="#4338ca" stroke-width="3"/><text x="${40+l*5}" y="18" text-anchor="middle" font-weight="bold" font-size="13">${l} ${u}</text><text x="${46+l*10}" y="${25+w*3.5}" font-weight="bold" font-size="13">${w} ${u}</text></svg>`;
+const frs=(n,k)=>[`${n-k}/${n}`,`${k}/${n+1}`,`${k+1}/${n}`,`${k}/${n+2}`,`1/${n}`];
+
+/* ---------- MATHS ---------- */
+const G={
+'Class 1':[
+()=>{const[e,p]=pk(IT),n=ri(2,12);return mk(`How many ${p} can you see?`,em(e.repeat(n)),n,near(n,1),['Let\'s count! 🔢',['Point to each one and count: 1, 2, 3 …',`There are ${n} ${p}.`]])},
+()=>{const[e,p]=pk(IT),a=ri(1,9),b=ri(1,10);return mk(`${nm()} has ${a} ${p}. A friend gives ${b} more. How many now?`,em(e.repeat(a)+' ➕ '+e.repeat(b)),a+b,near(a+b,1),['Add them up! ➕',[`Start with ${a}.`,`Count ${b} more: ${a} + ${b} = ${a+b}.`]])},
+()=>{const[e,p]=pk(IT),a=ri(5,20),b=ri(1,a-1);return mk(`${nm()} had ${a} ${p} and gave ${b} away. How many are left?`,em(e.repeat(a)),a-b,near(a-b),['Take away! ➖',[`Start with ${a}.`,`Take away ${b}: ${a} − ${b} = ${a-b}.`]])},
+()=>{const t=ri(0,2),n=ri(3,98);return t==0?mk(`Which number comes just after ${n}?`,'',n+1,near(n+1),['After means +1 ➡️',[`${n} + 1 = ${n+1}.`]]):t==1?mk(`Which number comes just before ${n}?`,'',n-1,near(n-1),['Before means −1 ⬅️',[`${n} − 1 = ${n-1}.`]]):mk(`Fill in the blank: ${n-1}, __ , ${n+1}`,'',n,near(n),['Number neighbours 🏘️',[`The number between ${n-1} and ${n+1} is ${n}.`]])},
+()=>{const x=ri(1,99);let y=ri(1,99);if(y==x)y++;const b=ri(0,1);return mk(`Which number is ${b?'bigger':'smaller'}: ${x} or ${y}?`,'',b?Math.max(x,y):Math.min(x,y),[x,y],['Compare! ⚖️',[`Look at ${x} and ${y}.`,`The ${b?'bigger':'smaller'} one is ${b?Math.max(x,y):Math.min(x,y)}.`]])},
+()=>{const k=pk(Object.keys(SHP)),c=pk(['#ef4444','#3b82f6','#22c55e','#f59e0b','#a855f7','#ec4899']);return mk('What is the name of this shape?',`<svg width="110" viewBox="0 0 100 100">${SHP[k](c)}</svg>`,k,Object.keys(SHP),['Know your shapes! 🔷',['Look at the sides and corners.',`This shape is a ${k}.`]])},
+()=>{const j=ri(0,6),f=ri(0,1),a=D[(j+(f?1:6))%7];return mk(`Which day comes ${f?'after':'before'} ${D[j]}?`,'',a,sh(D.filter(x=>x!=a&&x!=D[j])),['Days of the week 📅',[D.join(', ')+'.',`${f?'After':'Before'} ${D[j]} comes ${a}.`]])},
+()=>{const n=ri(10,99),t=ri(0,1),a=t?Math.floor(n/10):n%10;return mk(`In the number ${n}, which digit is in the ${t?'tens':'ones'} place?`,'',a,[t?n%10:Math.floor(n/10),(a+1)%10,(a+3)%10,(a+7)%10],['Tens and ones 🔟',[`${n} has ${Math.floor(n/10)} tens and ${n%10} ones.`,`The ${t?'tens':'ones'} digit is ${a}.`]])},
+()=>{const a=pk([1,2,5,10]),b=pk([1,2,5,10]);return mk(`${nm()} has a ₹${a} coin and a ₹${b} coin. How much money in all?`,em(`🪙₹${a} ➕ 🪙₹${b}`),`₹${a+b}`,near(a+b,1).map(x=>'₹'+x),['Count the coins 🪙',[`₹${a} + ₹${b} = ₹${a+b}.`]])},
+()=>{const s=pk([2,5,10]),a=s*ri(1,3),q=[0,1,2,3].map(k=>a+k*s),n=a+4*s;return mk(`What comes next? ${q.join(', ')}, __`,'',n,near(n),['Skip counting 🐸',[`We add ${s} each time.`,`${q[3]} + ${s} = ${n}.`]])},
+()=>{const n=ri(1,60);return mk(`Is ${n} an even or an odd number?`,'',n%2?'odd':'even',['odd','even'],['Even or odd? 👯',[`Even numbers end in 0, 2, 4, 6, 8.`,`${n} is ${n%2?'odd':'even'}.`]])}
+],
+'Class 2':[
+()=>{const a=ri(11,60),b=ri(11,39);return mk(`${a} + ${b} = ?`,'',a+b,near(a+b),['Add tens and ones ➕',[`Ones: ${a%10} + ${b%10} = ${a%10+b%10}.`,`Tens: ${a-a%10} + ${b-b%10} = ${a+b-a%10-b%10}.`,`Total = ${a+b}.`]])},
+()=>{const a=ri(30,99),b=ri(10,a-5);return mk(`${a} − ${b} = ?`,'',a-b,near(a-b),['Subtract ➖',[`Take away ${b} from ${a}.`,`${a} − ${b} = ${a-b}.`]])},
+()=>{const a=pk([2,3,4,5,10]),b=ri(1,10);return mk(`${a} × ${b} = ?`,'',a*b,near(a*b,1),[`Table of ${a} ✖️`,[`${a} × ${b} means ${b} groups of ${a}.`,`${a} × ${b} = ${a*b}.`]])},
+()=>{const n=ri(101,999),t=ri(0,2),a=[Math.floor(n/100),Math.floor(n/10)%10,n%10][t];return mk(`In ${n}, which digit is in the ${['hundreds','tens','ones'][t]} place?`,'',a,[(a+1)%10,(a+2)%10,(a+5)%10,(a+7)%10],['Place value 🏠',[`${n} = ${Math.floor(n/100)} hundreds, ${Math.floor(n/10)%10} tens, ${n%10} ones.`,`Answer: ${a}.`]])},
+()=>{const n=pk([2,3,4,6,8]),k=ri(1,n-1);return mk('What fraction of the shape is orange?',pie(n,k),`${k}/${n}`,frs(n,k),['Fractions 🍕',[`Count all equal parts: ${n}.`,`Count orange parts: ${k}.`,`Fraction = ${k}/${n}.`]])},
+()=>{const h=ri(1,12),m=pk([0,30]),a=tm(h,m);return mk('What time does the clock show?',clock(h,m),a,[tm(h%12+1,m),tm((h+10)%12+1,m),tm(h,30-m)],['Read the clock ⏰',['The short red hand shows the hour.',m?'The long hand points at 6, so it is half past.':'The long hand points at 12, so it is o\'clock.',`Time is ${a}.`]])},
+()=>{const a=ri(5,45),b=ri(5,45),s=ri(0,1),t=ri(60,100);return s?mk(`${nm()} pays ₹${t} for a toy that costs ₹${a}. How much change comes back?`,'',`₹${t-a}`,near(t-a,1).map(x=>'₹'+x),['Find the change 💰',[`₹${t} − ₹${a} = ₹${t-a}.`]]):mk(`A pencil costs ₹${a} and an eraser costs ₹${b}. What is the total?`,'',`₹${a+b}`,near(a+b,1).map(x=>'₹'+x),['Add the prices 💰',[`₹${a} + ₹${b} = ₹${a+b}.`]])},
+()=>{const x=ri(100,999);let y=ri(100,999);if(x==y)y++;const b=ri(0,1),a=b?Math.max(x,y):Math.min(x,y);return mk(`Which number is ${b?'greater':'smaller'}: ${x} or ${y}?`,'',a,[x,y],['Compare 3-digit numbers ⚖️',['Compare hundreds first, then tens, then ones.',`The ${b?'greater':'smaller'} number is ${a}.`]])},
+()=>{const s=pk([2,3,4,5,10]),a=s*ri(1,4),n=a+4*s;return mk(`What comes next? ${[0,1,2,3].map(k=>a+k*s).join(', ')}, __`,'',n,near(n),['Skip counting 🐸',[`Jump by ${s} each time.`,`Next number: ${n}.`]])},
+()=>{const[e,p]=pk(IT),a=ri(2,5),b=ri(2,10);return mk(`${nm()} has ${a} bags with ${b} ${p} in each bag. How many ${p} in all?`,a*b<=30?em(e.repeat(b)+'<br>').repeat(a):'',a*b,near(a*b,1),['Groups! 👜',[`${a} bags × ${b} each.`,`${a} × ${b} = ${a*b}.`]])},
+()=>{const a=ri(5,40),x=ri(5,50);return mk(`Find the missing number: __ + ${a} = ${a+x}`,'',x,near(x,1),['Missing number 🕵️',[`Subtract: ${a+x} − ${a} = ${x}.`]])},
+()=>{const j=ri(0,11),f=ri(0,1),a=MO[(j+(f?1:11))%12];return mk(`Which month comes ${f?'after':'before'} ${MO[j]}?`,'',a,sh(MO.filter(x=>x!=a&&x!=MO[j])),['Months of the year 🗓️',[`There are 12 months, from January to December.`,`${f?'After':'Before'} ${MO[j]} comes ${a}.`]])},
+()=>{const e=2*ri(1,49),o=[1,3,5,7].map(k=>2*ri(1,49)+k-1+(k>1?0:0)).map(x=>x%2?x:x+1);return mk('Which of these is an even number?','',e,o,['Even numbers 👯',['Even numbers end in 0, 2, 4, 6 or 8.',`${e} is even.`]])}
+],
+'Class 3':[
+()=>{const a=ri(120,600),b=ri(120,390);return mk(`${a} + ${b} = ?`,'',a+b,near(a+b),['Add 3-digit numbers ➕',[`Add ones, then tens, then hundreds.`,`${a} + ${b} = ${a+b}.`]])},
+()=>{const a=ri(300,999),b=ri(101,a-50);return mk(`${a} − ${b} = ?`,'',a-b,near(a-b),['Subtract 3-digit numbers ➖',['Subtract ones, then tens, then hundreds (borrow if needed).',`${a} − ${b} = ${a-b}.`]])},
+()=>{const a=ri(11,60),b=ri(2,9);return mk(`${a} × ${b} = ?`,'',a*b,near(a*b,1),['Multiply ✖️',[`${a} × ${b} = ${a*b}.`,`Check: ${a} added ${b} times.`]])},
+()=>{const b=ri(2,9),q=ri(2,12);return mk(`${b*q} ÷ ${b} = ?`,'',q,near(q,1),['Divide ➗',[`Ask: ${b} times what makes ${b*q}?`,`${b} × ${q} = ${b*q}, so the answer is ${q}.`]])},
+()=>{const l=ri(4,15),w=ri(2,l-1),s=ri(0,3);return s?mk('What is the perimeter of this rectangle?',rect(l,w,'cm'),`${2*(l+w)} cm`,near(2*(l+w),1).map(x=>x+' cm'),['Perimeter 📏',['Perimeter = add all 4 sides.',`${l} + ${w} + ${l} + ${w} = ${2*(l+w)} cm.`]]):mk(`A square garden has sides of ${l} m. What is its perimeter?`,'',`${4*l} m`,near(4*l,1).map(x=>x+' m'),['Perimeter of a square 🌳',[`A square has 4 equal sides.`,`4 × ${l} = ${4*l} m.`]])},
+()=>{const[a,b]=pk([[1,2],[1,3],[2,3],[1,4],[3,4],[2,5],[1,5]]),m=ri(2,5);return mk(`${a}/${b} = __/${b*m}`,'',a*m,near(a*m,1),['Equivalent fractions 🧩',[`Multiply top and bottom by ${m}.`,`${a} × ${m} = ${a*m}, ${b} × ${m} = ${b*m}.`]])},
+()=>{const h=ri(1,12),m=pk([5,10,15,20,25,35,40,45,50]),a=tm(h,m);return mk('What time does the clock show?',clock(h,m),a,[tm(h,(m+15)%60||5),tm(h%12+1,m),tm(h,(m+35)%60||10)],['Read the clock ⏰',['Short hand = hour. Long hand = minutes.',`Each number on the clock is 5 minutes. Time is ${a}.`]])},
+()=>{const t=ri(0,2),n=ri(2,9);return t==0?mk(`${n} m = ? cm`,'',n*100,[n*10,n*1000,n*100+10],['Metres to cm 📐',['1 m = 100 cm.',`${n} × 100 = ${n*100} cm.`]]):t==1?mk(`${n} km = ? m`,'',n*1000,[n*100,n*10000,n*1000+100],['Km to metres 🛣️',['1 km = 1000 m.',`${n} × 1000 = ${n*1000} m.`]]):mk(`${n} kg = ? g`,'',n*1000,[n*100,n*10000,n*1000+100],['Kg to grams ⚖️',['1 kg = 1000 g.',`${n} × 1000 = ${n*1000} g.`]])},
+()=>{const n=ri(11,989),t=ri(0,1),u=t?100:10,a=Math.round(n/u)*u;return mk(`Round ${n} to the nearest ${u}.`,'',a,[a+u,a-u,a+2*u],['Rounding 🎯',[`Look at the ${t?'tens':'ones'} digit.`,`If it is 5 or more, round up. So ${n} → ${a}.`]])},
+()=>{const p=5*ri(4,19);return mk(`${nm()} pays ₹100 for a book that costs ₹${p}. How much change comes back?`,'',`₹${100-p}`,near(100-p,1).map(x=>'₹'+x),['Change from ₹100 💰',[`₹100 − ₹${p} = ₹${100-p}.`]])},
+()=>{const n=ri(1,20);return mk(`Which is the Roman numeral for ${n}?`,'',RM[n],[RM[Math.max(1,n-1)],RM[Math.min(20,n+1)],RM[Math.min(20,n+2)],RM[Math.max(1,n-2)]],['Roman numerals 🏛️',['I = 1, V = 5, X = 10.',`${n} is written ${RM[n]}.`]])},
+()=>{const[e,p]=pk(IT),a=ri(6,12),b=ri(3,9);return mk(`A box holds ${a} ${p}. How many ${p} are in ${b} boxes?`,'',a*b,near(a*b,1),['Word problem 📦',[`${b} boxes × ${a} each.`,`${b} × ${a} = ${a*b}.`]])},
+()=>{const s=ri(2,30),d=ri(3,12),q=[0,1,2,3].map(k=>s+k*d),n=s+4*d;return mk(`Find the next number: ${q.join(', ')}, __`,'',n,near(n),['Number pattern 🔮',[`The gap is ${d} each time.`,`${q[3]} + ${d} = ${n}.`]])},
+()=>{const n=ri(1000,9999),p=ri(0,3),d=Math.floor(n/10**p)%10;if(!d)return G['Class 3'][2]();const v=d*10**p;return mk(`What is the value of the digit ${d} in ${n}?`,'',v,[d,d*10,d*100,d*1000,d*10**((p+1)%4)],['Place value 🏠',[`The digit ${d} is in the ${['ones','tens','hundreds','thousands'][p]} place.`,`Its value is ${v}.`]])},
+()=>{const j=ri(0,11);return mk(`How many days are there in ${MO[j]}?`,'',MD[j],[28,29,30,31],['Days in a month 🗓️',['30 days: April, June, September, November.','28 days: February. All others have 31.']])}
+],
+'Class 4':[
+()=>{const a=ri(1200,6000),b=ri(1000,3900);return mk(`${a} + ${b} = ?`,'',a+b,near(a+b),['Add 4-digit numbers ➕',['Add ones, tens, hundreds, then thousands. Carry when needed.',`${a} + ${b} = ${a+b}.`]])},
+()=>{const a=ri(3000,9999),b=ri(1000,a-500);return mk(`${a} − ${b} = ?`,'',a-b,near(a-b),['Subtract 4-digit numbers ➖',['Start from the ones and borrow when needed.',`${a} − ${b} = ${a-b}.`]])},
+()=>{const a=ri(12,49),b=ri(11,29),t=b-b%10;return mk(`${a} × ${b} = ?`,'',a*b,near(a*b,1),['Multiply ✖️',[`Split ${b} into ${t} and ${b%10}.`,`${a} × ${t} = ${a*t}, ${a} × ${b%10} = ${a*(b%10)}.`,`${a*t} + ${a*(b%10)} = ${a*b}.`]])},
+()=>{const b=ri(3,9),q=ri(5,20),r=ri(1,b-1),n=b*q+r;return mk(`What is the remainder when ${n} ÷ ${b}?`,'',r,near(r),['Remainder 🧮',[`${b} × ${q} = ${b*q}.`,`${n} − ${b*q} = ${r}, so the remainder is ${r}.`]])},
+()=>{const n=pk([5,6,8,10,12]),a=ri(1,n-3),b=ri(1,n-a-1);return mk(`${a}/${n} + ${b}/${n} = ?`,'',`${a+b}/${n}`,[`${a+b}/${2*n}`,`${a*b}/${n}`,`${a+b+1}/${n}`,`${a+b}/${n+1}`],['Add fractions 🍕',['Same bottom number? Add only the tops.',`${a} + ${b} = ${a+b}, so the answer is ${a+b}/${n}.`]])},
+()=>{const l=ri(4,15),w=ri(2,l-1);return mk('What is the area of this rectangle?',rect(l,w,'cm'),`${l*w} sq cm`,[`${2*(l+w)} sq cm`,`${l+w} sq cm`,`${l*w+10} sq cm`],['Area 🟦',['Area = length × width.',`${l} × ${w} = ${l*w} sq cm.`]])},
+()=>{const n=ri(21,49);return mk(`Which is the Roman numeral for ${n}?`,'',rom(n),[rom(n+1),rom(n-1),rom(n+10),rom(n-2)],['Roman numerals 🏛️',['X = 10, XX = 20, XXX = 30, XL = 40.',`${n} is written ${rom(n)}.`]])},
+()=>{const h=ri(2,9),t=ri(0,1);return t?mk(`${h} hours = ? minutes`,'',h*60,near(h*60,1),['Hours to minutes ⏳',['1 hour = 60 minutes.',`${h} × 60 = ${h*60}.`]]):mk(`${h} weeks = ? days`,'',h*7,near(h*7,1),['Weeks to days 🗓️',['1 week = 7 days.',`${h} × 7 = ${h*7}.`]])},
+()=>{const m=ri(3,9),a=m*ri(3,12);return mk(`Which of these is a multiple of ${m}?`,'',a,[a+1,a+2,a-1],['Multiples ✖️',[`Multiples of ${m} are in its table: ${m}, ${m*2}, ${m*3} …`,`${a} = ${m} × ${a/m}.`]])},
+()=>{const p=ri(12,45),n=ri(3,9);return mk(`One notebook costs ₹${p}. What is the cost of ${n} notebooks?`,'',`₹${p*n}`,near(p*n,1).map(x=>'₹'+x),['Shopping time 🛍️',[`${n} × ₹${p} = ₹${p*n}.`]])}
+],
+'Class 5':[
+()=>{const a=ri(11,99)/10,b=ri(11,99)/10,s=a+b,f=x=>x.toFixed(1);return mk(`${f(a)} + ${f(b)} = ?`,'',f(s),[f(s+.1),f(s-.1),f(s+1),f(s-1)],['Add decimals ➕',['Line up the decimal points and add.',`${f(a)} + ${f(b)} = ${f(s)}.`]])},
+()=>{const p=pk([10,20,25,50]),n=pk([40,60,80,100,200]),r=n*p/100;return mk(`What is ${p}% of ${n}?`,'',r,near(r,1),['Percentages ％',[`${p}% means ${p} out of 100.`,`${n} × ${p} ÷ 100 = ${r}.`]])},
+()=>{const L=pk([[4,6,12,2],[6,8,24,2],[8,12,24,4],[9,12,36,3],[10,15,30,5],[12,18,36,6],[6,9,18,3]]),t=ri(0,1),a=t?L[3]:L[2];return mk(`What is the ${t?'HCF':'LCM'} of ${L[0]} and ${L[1]}?`,'',a,near(a,1),[t?'HCF 🔗':'LCM 🔗',[t?'HCF is the biggest number that divides both.':'LCM is the smallest number that both divide into.',`Answer: ${a}.`]])},
+()=>{const L=pk([[1,2,1,4,'3/4'],[1,2,1,3,'5/6'],[1,3,1,6,'1/2'],[2,3,1,6,'5/6']]);return mk(`${L[0]}/${L[0]==2?3:L[0]==1&&L[2]==1&&L[3]==6?3:2} + ${L[2]}/${L[3]} = ?`,'',L[4],['2/5','2/7','1/5','3/8'],['Unlike fractions 🍰',['Make the bottom numbers the same first.',`The answer is ${L[4]}.`]])},
+()=>{const b=ri(10,40),d=ri(1,6);return mk(`What is the average of ${b-d}, ${b} and ${b+d}?`,'',b,near(b,1),['Average 📊',['Average = total ÷ number of items.',`${b-d} + ${b} + ${b+d} = ${3*b}, and ${3*b} ÷ 3 = ${b}.`]])},
+()=>{const s=ri(2,6);return mk(`What is the volume of a cube with side ${s} cm?`,'',`${s**3} cubic cm`,[`${6*s*s} cubic cm`,`${3*s} cubic cm`,`${s**3+s} cubic cm`],['Volume 🧊',['Volume of a cube = side × side × side.',`${s} × ${s} × ${s} = ${s**3} cubic cm.`]])},
+()=>{const a=ri(2,9),b=ri(2,6),c=ri(2,6);return mk(`${a} + ${b} × ${c} = ?`,'',a+b*c,[(a+b)*c,a+b+c,a*b+c],['BODMAS 🧠',['Multiply first, then add.',`${b} × ${c} = ${b*c}, then ${a} + ${b*c} = ${a+b*c}.`]])},
+()=>{const p=pk([100,200,300,400,500]);return mk(`A toy costs ₹${p}. With a 10% discount, how much will you pay?`,'',`₹${p*.9}`,[`₹${p*.1}`,`₹${p-10}`,`₹${p*.8}`],['Discount 🏷️',[`10% of ₹${p} = ₹${p*.1}.`,`₹${p} − ₹${p*.1} = ₹${p*.9}.`]])},
+()=>{const s=pk([40,50,60,80]),t=ri(2,5);return mk(`A car goes ${s} km every hour. How far will it go in ${t} hours?`,'',`${s*t} km`,near(s*t,1).map(x=>x+' km'),['Distance 🚗',['Distance = speed × time.',`${s} × ${t} = ${s*t} km.`]])}
+]};
+
+/* ---------- ENGLISH and EVS (question|answer|wrong1|wrong2|wrong3|fun fact) ---------- */
+const bk=L=>()=>{const[t,a,x,y,z,e]=pk(L).split('|');return mk(t,'',a,[x,y,z],['Let\'s learn! 💡',[e]])};
+const OP={A:'hot-cold,big-small,up-down,day-night,happy-sad,fast-slow,open-close,hard-soft',B:'hot-cold,big-small,early-late,empty-full,strong-weak,brave-scared,clean-dirty,rich-poor,light-heavy',C:'ancient-modern,generous-selfish,victory-defeat,expand-shrink,increase-decrease,accept-refuse,include-exclude,arrive-depart'};
+const op=b=>()=>{const L=OP[b].split(','),p=pk(L).split('-'),f=ri(0,1),w=p[f],a=p[1-f];return mk(`What is the opposite of "${w}"?`,'',a,sh(L.join('-').split('-').filter(x=>x!=w&&x!=a)),['Opposites 🔄',[`${w} ↔ ${a}`]])};
+const PL={A:'cat:cats,dog:dogs,box:boxes,bus:buses,baby:babies,child:children,man:men,foot:feet',B:'box:boxes,baby:babies,child:children,mouse:mice,leaf:leaves,tooth:teeth,city:cities,woman:women,knife:knives',C:'wolf:wolves,goose:geese,ox:oxen,potato:potatoes,country:countries,person:people,sheep:sheep,fly:flies'};
+const pl=b=>()=>{const p=pk(PL[b].split(',')).split(':'),s=p[0];return mk(`What is the plural of "${s}"?`,'',p[1],[s+'s',s+'es',s.slice(0,-1)+'ies',s+'en'],['Plurals 👯',[`${s} → ${p[1]}`]])};
+const EA=['A cat says __.|meow|moo|woof|quack|A cat says meow 🐱','Which one is a colour?|Green|Chair|Run|Book|Green is a colour 🎨','I __ a happy boy.|am|is|are|be|Use "am" with "I".','Which word starts with the letter S?|Sun|Moon|Tree|Fish|Sun starts with S ☀️','Which is an animal?|Elephant|Table|Pencil|Bus|An elephant is an animal 🐘','She __ a girl.|is|am|are|be|Use "is" with she, he and it.','This is __ apple.|an|a|the|two|Use "an" before the sounds a, e, i, o, u.'];
+const EB=['They __ playing in the park.|are|is|am|was|Use "are" with they, we and you.','Which is a noun?|Elephant|Quickly|Jump|Bright|A noun names a person, place, animal or thing.','Which is a verb (action word)?|Run|Table|Blue|Tall|Verbs show actions.','He __ to school daily.|goes|go|going|gone|Use "goes" with he, she and it.','Which is an adjective?|Beautiful|Sing|Slowly|Table|Adjectives describe nouns.','Yesterday I __ to the market.|went|go|goes|going|"Went" is the past of "go".','A group of birds is called a __.|flock|herd|pack|pride|A group of birds is a flock 🐦'];
+const EC=['Which word is an adverb?|Quickly|Quick|Quicker|Quickest|Adverbs tell how an action is done.','Which sentence is in the past tense?|We played cricket.|We play cricket.|We will play cricket.|We are playing cricket.|"Played" is the past form.','Neither of the boys __ late.|was|were|are|be|"Neither" takes a singular verb.','A group of lions is called a __.|pride|herd|flock|pack|A group of lions is a pride 🦁','Which mark ends a question?|?|.|!|,|A question mark ends a question.','Which is a synonym (same meaning) of "big"?|Huge|Tiny|Thin|Short|Huge means very big.','She is __ than her sister. (tall)|taller|tallest|more tall|most tall|Add -er to compare two people.'];
+const VA=['Which animal gives us milk?|Cow|Lion|Snake|Eagle|Cows give us milk 🐄','We see with our __.|eyes|ears|nose|hands|Eyes help us see 👀','Which one is a fruit?|Mango|Potato|Onion|Carrot|Mango is a sweet fruit 🥭','Which is our national bird?|Peacock|Crow|Sparrow|Parrot|The peacock is India\'s national bird 🦚','Plants need __ to grow.|water and sunlight|toys|sweets|plastic|Plants drink water and love sunlight 🌱','Which season is the hottest?|Summer|Winter|Spring|Autumn|Summer is hot ☀️'];
+const VB=['Which is our national animal?|Tiger|Lion|Elephant|Deer|The tiger is India\'s national animal 🐯','Which gas do we breathe in?|Oxygen|Carbon dioxide|Smoke|Helium|We need oxygen to live.','The Sun is a __.|star|planet|moon|comet|The Sun is a star ☀️','Which organ pumps blood?|Heart|Lungs|Brain|Stomach|The heart pumps blood ❤️','Which part of a plant takes water from the soil?|Roots|Leaves|Flowers|Fruits|Roots drink water 🌿','Which of these is a herbivore (plant eater)?|Cow|Lion|Tiger|Crocodile|Cows eat grass and plants.','Water freezes into __.|ice|steam|smoke|dew|Freezing water becomes ice 🧊'];
+const VC=['What is the capital of India?|New Delhi|Mumbai|Kolkata|Chennai|New Delhi is India\'s capital 🏛️️','Which is the largest planet?|Jupiter|Earth|Mars|Venus|Jupiter is the biggest planet 🪐','Plants make food by __.|photosynthesis|digestion|evaporation|melting|Photosynthesis uses sunlight, water and air.','Which vitamin do we get from sunlight?|Vitamin D|Vitamin C|Vitamin A|Vitamin B|Sunlight gives us Vitamin D ☀️','Which gas do plants take in?|Carbon dioxide|Oxygen|Nitrogen|Hydrogen|Plants breathe in carbon dioxide.','Who is called the Father of the Nation?|Mahatma Gandhi|Jawaharlal Nehru|Subhas Bose|Sardar Patel|Gandhiji led India\'s freedom movement.','Which is the longest river in India?|Ganga|Yamuna|Godavari|Narmada|The Ganga is India\'s longest river 🌊'];
+const bnd=()=>{const c=+S.cls.slice(-1);return c<3?'A':c==3?'B':'C'};
+const gens=()=>{if(S.sub=='Maths')return G[S.cls];const b=bnd();return S.sub=='English'?[bk({A:EA,B:EB,C:EC}[b]),bk({A:EA,B:EB,C:EC}[b]),op(b),pl(b)]:[bk({A:VA,B:VB,C:VC}[b])]};
+
+function build(){
+  rng=seed((+S.cls.slice(-1))*97+(S.brd=='CBSE'?1:2)*1013+['Maths','English','EVS'].indexOf(S.sub)*31+Date.now());
+  const g=gens(),seen=new Set(),out=[];
+  for(let n=0;n<4000&&out.length<50;n++){const q=g[ri(0,g.length-1)]();const k=q.t+q.v;if(!seen.has(k)){seen.add(k);q.pts=10;out.push(q)}}
+  return out;
+}
+function sel(k,v,b){S[k]=v;[...b.parentNode.children].forEach(x=>x.classList.toggle('on',x==b))}
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id==id));
+  $('rst').style.display = id === 's1' ? 'inline-block' : 'none';$('home').style.display = (id === 's1' || id === 's2') ? 'inline-block' : 'none';
+  if(id!='s1')bgm(0)
+}
+
+/* ---------- SOUND: soft xylophone chimes, gentle music and a cheering voice ---------- */
+const ac=()=>AC=AC||new(window.AudioContext||window.webkitAudioContext)();
+function note(f,t,d,type='sine',v=.15){try{const c=ac(),o=c.createOscillator(),g=c.createGain(),s=c.currentTime+t;o.type=type;o.frequency.value=f;o.connect(g);g.connect(c.destination);g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(v,s+.02);g.gain.exponentialRampToValueAtTime(.001,s+d);o.start(s);o.stop(s+d+.05)}catch(e){}}
+function play(k,n=0){if(mute)return;try{ac().resume()}catch(e){}
+  if(k=='tap'){note(880,0,.12,'sine',.1);return}
+  if(k=='ok'){const P=[523,659,784,1047,1319,1568].slice(0,Math.min(4+n,6));P.forEach((f,j)=>{note(f,j*.09,.6);note(f*2,j*.09,.3,'triangle',.04)})}
+  if(k=='no'){note(392,0,.45,'sine',.12);note(330,.2,.7,'sine',.1)}
+  if(k=='win'){[523,659,784,1047,784,1047,1319,1568].forEach((f,j)=>{note(f,j*.15,.55,'triangle',.14);note(f/2,j*.15,.55,'sine',.08)})}
+}
+function bgm(on=1){clearInterval(bg);bg=null;if(!on||!musOn||mute)return;const P=[392,440,523,587,659,784];let k=0;bg=setInterval(()=>{k++;note(rp(P),0,1,'sine',.045);if(k%4==0)note(rp(P)/2,0,1.6,'triangle',.03)},560)}
+function talk(t){if(mute||!window.speechSynthesis)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/__/g,' blank ').replace(/₹(\d+)/g,'$1 rupees').replace(/[^\w\s!'.,?%+=\/-]/g,' '));u.lang='en-IN';u.pitch=1.3;u.rate=.95;const v=speechSynthesis.getVoices().find(v=>/en-IN/i.test(v.lang));if(v)u.voice=v;speechSynthesis.speak(u)}catch(e){}}
+function tg(w){if(w=='snd'){mute=!mute;if(mute&&window.speechSynthesis)speechSynthesis.cancel()}else musOn=!musOn;
+  $('snd').classList.toggle('off',mute);$('mus').classList.toggle('off',!musOn);$('snd').textContent=mute?'🔇':'🔊';
+  if($('s1').classList.contains('on'))bgm();play('tap')}
+
+function confetti(n){for(let k=0;k<n;k++){const s=document.createElement('span');s.className='fall';s.textContent=rp(['🎉','⭐','🪔','🌸','✨','🎈']);s.style.left=Math.random()*100+'vw';s.style.animationDuration=1.5+Math.random()*2+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),3800)}}
+
+/* ---------- GAME ---------- */
+const ST=['🦁','🐯','🐘','🦚','🐼','🦄','🐬','🦋','🌟','🍭','🚀','🏅'];
+const CHEER=['Shabash!','Wah! Kya baat hai!','Bahut badhiya!','Zabardast!','Superb!','Well done!'];
+const STREAK={2:'2 in a row! You are on fire! 🔥',3:'Hat-trick! Three in a row! 🎩⭐',4:'Four! You are unstoppable! 🚀',5:'FIVE in a row! Jungle King! 👑'};
+const OOPS=['No worries! Mistakes help us grow 🌱','Almost! You will get the next one 💪','Good try! Read the trick below 👇','Every champion slips sometimes 🦁'];
+const TEASE=['Next question 🎁','Ooh, what is next? 👀','Bring it on! 💥','One more sticker awaits! 🏅','Ready, champ? 🚀'];
+
+function restartQuiz(){
+  if(confirm("Restart the quiz from the beginning?")){
+    start();
+  }
+}
+
+function quitToHome(){
+  if($('s1').classList.contains('on')){
+    if(confirm("Are you sure you want to quit the quiz and return to the main menu?")){
+      show('s0');
+    }
+  } else {
+    show('s0');
+  }
+}
+
+function start(){
+  Q=shr(build()).slice(0,S.cnt);i=0;sc=0;st=0;ok=0;stk=[];
+  $('bd').textContent=`${S.sub=='EVS'?'EVS & GK':S.sub} • ${S.cls} • ${S.brd}`;
+  show('s1');play('tap');bgm();load();talk('Let\'s go, champ!');
+}
+function load(){
+  done=false;const q=Q[i];
+  $('qt').textContent=`${i+1}. ${q.t}`;
+  const v=$('vis');v.innerHTML=q.v;v.style.display=q.v?'flex':'none';
+  $('opts').innerHTML='';
+  q.o.forEach(o=>{const b=document.createElement('button');b.className='opt';b.textContent=o;b.onclick=()=>pick(b,o);$('opts').appendChild(b)});$('ex').style.display='none';$('nx').style.display='none';$('say').textContent=i==0?'Let\'s go! Win stickers 🎁':rp(['You can do it! 💪','Think carefully 🤔','Take your time 🌈','Ready? Go! 🚀']);
+  $('pg').style.width=i/Q.length*100+'%';
+  $('sc').textContent='⭐ '+sc;$('stk').textContent='🔥 '+st;
+  $('shelf').innerHTML=stk.join(' ')+(stk.length?'':'<small>Answer right to collect stickers!</small>');
+}
+function pick(b,o){
+  if(done)return;done=true;const q=Q[i],good=o===q.a;
+  document.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.textContent===q.a)x.classList.add('ok')});
+  let msg;
+  if(good){sc+=10+Math.min(st,5)*2;st++;ok++;stk.push(rp(ST));play('ok',st);confetti(10+Math.min(st,5)*4);
+    msg=STREAK[Math.min(st,5)]&&st>1?STREAK[Math.min(st,5)]:rp(CHEER)+' 🎉';
+    const m=$('mas');m.classList.remove('hop');void m.offsetWidth;m.classList.add('hop')}
+  else{b.classList.add('no');st=0;play('no');msg=rp(OOPS)}
+  if(i+1==Math.ceil(Q.length/2)&&Q.length>3)msg+=' Halfway there! 🎉';
+  $('say').textContent=msg;talk(msg);
+  $('sc').textContent='⭐ '+sc;$('stk').textContent='🔥 '+st;
+  $('shelf').innerHTML=stk.join(' ')+(stk.length?'':'<small>Answer right to collect stickers!</small>');
+  $('et').textContent=q.e[0];$('es').innerHTML=q.e[1].map(s=>`<li>👉 ${s}</li>`).join('');
+  $('ex').style.display='block';
+  const n=$('nx');n.style.display='block';n.textContent=i+1<Q.length?rp(TEASE):'See my result 🏆';
+}
+function next(){play('tap');i++;i<Q.length?load():finish()}
+function finish(){
+  const p=ok/Q.length,s=p>=.9?3:p>=.6?2:p>=.3?1:0;
+  $('rs').textContent='⭐'.repeat(s)+'☆'.repeat(3-s);
+  const t=p>=.9?'Shabash, Champion!':p>=.6?'Wah! Well done!':'Good try! Every champion practises!';
+  $('rt').textContent=t;
+  $('rp').textContent=`${ok} out of ${Q.length} correct • ${sc} points`;
+  $('hl').innerHTML=stk.length?`Your stickers:<br>${stk.join(' ')}`:'Play again to win your first sticker! 🎁';
+  show('s2');play('win');talk(t);if(s>0)confetti(50);
+}
+</script>
+</body>
+</html>
