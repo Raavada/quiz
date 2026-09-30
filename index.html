@@ -185,22 +185,23 @@ const pie=(n,k)=>{let s='';for(let j=0;j<n;j++){const a=j*2*Math.PI/n,b=(j+1)*2*
 const rect=(l,w,u)=>`<svg width="230" viewBox="0 0 230 130"><rect x="40" y="25" width="${l*10}" height="${w*7}" fill="#c7d2fe" stroke="#4338ca" stroke-width="3"/><text x="${40+l*5}" y="18" text-anchor="middle" font-weight="bold" font-size="13">${l} ${u}</text><text x="${46+l*10}" y="${25+w*3.5}" font-weight="bold" font-size="13">${w} ${u}</text></svg>`;
 const frs=(n,k)=>[`${n-k}/${n}`,`${k}/${n+1}`,`${k+1}/${n}`,`${k}/${n+2}`,`1/${n}`];
 
-/* ---------- CLASS 1 SCREENSHOT QUESTIONS ---------- */
-const getC1Questions = () => [
-  mk('If Rahul has 5 apples and gives 2 to his friend, how many apples does Rahul have left?', em('🍎🍎🍎🍎🍎'), '3', ['2', '4', '5'], ['Subtraction 🍎', ['Start with 5 apples.', 'Take away 2: 5 − 2 = 3.']]),
-  mk('Which shape looks like a box or a dice?', '', 'Cube', ['Circle', 'Square', 'Triangle'], ['3D Shapes 🎲', ['A box or dice is 3D and has 6 square faces, so it is a cube.']]),
-  mk('Which part of a plant stays under the soil and drinks water?', '', 'Roots', ['Stem', 'Leaves', 'Flower'], ['Plant Parts 🌿', ['Roots grow underground to absorb water and nutrients.']]),
-  mk('Fill in the blank with a, an, or the: "I saw ___ elephant at the zoo."', '', 'an', ['a', 'the', 'none'], ['Articles 🐘', ['Use "an" before words that start with a vowel sound like "elephant".']]),
-  mk('Rahul studies in ___ University.', '', 'a', ['an', 'the', 'none'], ['Articles 🎓', ['"University" starts with a "yoo" consonant sound, so we use "a".']]),
-  mk('Which word in this sentence is a naming word (noun): "The cat is sleeping"?', '', 'cat', ['sleeping', 'The', 'is'], ['Nouns 🐱', ['A noun names an animal, person, place, or thing. Here "cat" is the noun.']]),
-  mk('How many colours are in a Rainbow? Can you name them all?', '', '7', ['5', '6', '8'], ['Rainbow 🌈', ['A rainbow has 7 colors: VIBGYOR (Violet, Indigo, Blue, Green, Yellow, Orange, Red).']]),
-  mk('If I cut a cake 3 times, can I get 8 pieces? If yes, then how?', '', 'Yes, by cutting 2 times vertically and 1 time horizontally through the middle', ['No, it is impossible', 'Yes, by cutting 3 times vertically', 'Yes, by cutting diagonally only'], ['Cake Puzzle 🎂', ['Cutting 2 times vertically makes 4 pieces.', 'Cutting once horizontally cuts all 4 pieces in half, giving 8 pieces!']]),
-  mk('Which animal is called the ship of the desert?', '', 'Camel', ['Elephant', 'Lion', 'Horse'], ['Desert Animals 🐫', ['Camels can travel long distances in hot sand with little water.']]),
-  mk('Do you know what is a prime number? Can you tell all the prime numbers b/w 1-10?', '', '2, 3, 5, 7', ['1, 2, 3, 5', '2, 4, 6, 8', '3, 5, 7, 9'], ['Prime Numbers 🔢', ['Prime numbers have only 2 factors: 1 and themselves.', 'Between 1 and 10, the prime numbers are 2, 3, 5, and 7.']])
+/* ---------- CLASS 1 SCREENSHOT QUESTIONS GENERATOR ---------- */
+const getC1Generators = () => [
+  () => mk('If Rahul has 5 apples and gives 2 to his friend, how many apples does Rahul have left?', em('🍎🍎🍎🍎🍎'), '3', ['2', '4', '5'], ['Subtraction 🍎', ['Start with 5 apples.', 'Take away 2: 5 − 2 = 3.']]),
+  () => mk('Which shape looks like a box or a dice?', '', 'Cube', ['Circle', 'Square', 'Triangle'], ['3D Shapes 🎲', ['A box or dice is 3D and has 6 square faces, so it is a cube.']]),
+  () => mk('Which part of a plant stays under the soil and drinks water?', '', 'Roots', ['Stem', 'Leaves', 'Flower'], ['Plant Parts 🌿', ['Roots grow underground to absorb water and nutrients.']]),
+  () => mk('Fill in the blank with a, an, or the: "I saw ___ elephant at the zoo."', '', 'an', ['a', 'the', 'none'], ['Articles 🐘', ['Use "an" before words that start with a vowel sound like "elephant".']]),
+  () => mk('Rahul studies in ___ University.', '', 'a', ['an', 'the', 'none'], ['Articles 🎓', ['"University" starts with a "yoo" consonant sound, so we use "a".']]),
+  () => mk('Which word in this sentence is a naming word (noun): "The cat is sleeping"?', '', 'cat', ['sleeping', 'The', 'is'], ['Nouns 🐱', ['A noun names an animal, person, place, or thing. Here "cat" is the noun.']]),
+  () => mk('How many colours are in a Rainbow? Can you name them all?', '', '7', ['5', '6', '8'], ['Rainbow 🌈', ['A rainbow has 7 colors: VIBGYOR (Violet, Indigo, Blue, Green, Yellow, Orange, Red).']]),
+  () => mk('If I cut a cake 3 times, can I get 8 pieces? If yes, then how?', '', 'Yes, by cutting 2 times vertically and 1 time horizontally through the middle', ['No, it is impossible', 'Yes, by cutting 3 times vertically', 'Yes, by cutting diagonally only'], ['Cake Puzzle 🎂', ['Cutting 2 times vertically makes 4 pieces.', 'Cutting once horizontally cuts all 4 pieces in half, giving 8 pieces!']]),
+  () => mk('Which animal is called the ship of the desert?', '', 'Camel', ['Elephant', 'Lion', 'Horse'], ['Desert Animals 🐫', ['Camels can travel long distances in hot sand with little water.']]),
+  () => mk('Do you know what is a prime number? Can you tell all the prime numbers b/w 1-10?', '', '2, 3, 5, 7', ['1, 2, 3, 5', '2, 4, 6, 8', '3, 5, 7, 9'], ['Prime Numbers 🔢', ['Prime numbers have only 2 factors: 1 and themselves.', 'Between 1 and 10, the prime numbers are 2, 3, 5, and 7.']])
 ];
 
 /* ---------- MATHS ---------- */
 const G={
+'Class 1': getC1Generators(),
 'Class 2':[
 ()=>{const a=ri(11,60),b=ri(11,39);return mk(`${a} + ${b} = ?`,'',a+b,near(a+b),['Add tens and ones ➕',[`Ones: ${a%10} + ${b%10} = ${a%10+b%10}.`,`Tens: ${a-a%10} + ${b-b%10} = ${a+b-a%10-b%10}.`,`Total = ${a+b}.`]])},
 ()=>{const a=ri(30,99),b=ri(10,a-5);return mk(`${a} − ${b} = ?`,'',a-b,near(a-b),['Subtract ➖',[`Take away ${b} from ${a}.`,`${a} − ${b} = ${a-b}.`]])},
@@ -277,9 +278,6 @@ const gens=()=>{
 };
 
 function build(){
-  if(S.cls=='Class 1'){
-    return getC1Questions();
-  }
   rng=seed((+S.cls.slice(-1))*97+(S.brd=='CBSE'?1:2)*1013+['Maths','English','EVS'].indexOf(S.sub)*31+Date.now());
   const g=gens(),seen=new Set(),out=[];
   for(let n=0;n<4000&&out.length<50;n++){const q=g[ri(0,g.length-1)]();const k=q.t+q.v;if(!seen.has(k)){seen.add(k);q.pts=10;out.push(q)}}
@@ -333,7 +331,7 @@ function quitToHome(){
 }
 
 function start(){
-  Q=(S.cls=='Class 1'?build():shr(build())).slice(0,S.cnt);i=0;sc=0;st=0;ok=0;stk=[];
+  Q=shr(build()).slice(0,S.cnt);i=0;sc=0;st=0;ok=0;stk=[];
   $('bd').textContent=`${S.sub=='EVS'?'EVS & GK':S.sub} • ${S.cls} • ${S.brd}`;
   show('s1');play('tap');bgm();load();talk('Let\'s go, champ!');
 }
