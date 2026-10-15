@@ -87,6 +87,18 @@ background:linear-gradient(135deg,#ffd166,#ff8fab 55%,#a78bfa);background-attach
 .fall{position:fixed;top:-40px;font-size:1.8rem;pointer-events:none;z-index:9;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+.inp{width:100%;padding:10px 12px;margin-top:4px;border:3px solid var(--ink);border-radius:14px;background:#fff;font-size:1.05rem;font-weight:700;color:var(--ink)}
+.lab small{font-weight:500;opacity:.7}
+#rt{text-align:center;line-height:1.1;margin:4px 0;font-size:1.7rem}
+.cert{border:4px solid var(--ink);border-radius:20px;padding:14px;text-align:center;margin:10px 0;box-shadow:4px 4px 0 var(--ink)}
+.cert.a{background:#fff3b0}.cert.b{background:#c7e8ff}.cert.c{background:var(--ink);color:#fff}
+.cert-top{font-weight:800;letter-spacing:2px;font-size:.85rem;opacity:.85}
+.cert-name{font-size:clamp(2.6rem,12vw,3.8rem);font-weight:800;line-height:1.05;word-break:break-word;margin:6px 0;text-transform:capitalize}
+.cert-sub{font-weight:700;font-size:.9rem;opacity:.85}
+.cert-rank{font-size:1.5rem;font-weight:800;margin:8px 0 4px}
+.cert-line{font-weight:700}
+.cert-msg{font-weight:500;margin-top:6px}
+.lnk{display:block;margin:12px auto 0;background:none;border:none;font-weight:700;text-decoration:underline;cursor:pointer;color:var(--ink)}
 </style>
 </head>
 <body>
@@ -98,13 +110,27 @@ background:linear-gradient(135deg,#ffd166,#ff8fab 55%,#a78bfa);background-attach
   <button id="mus" title="Music" onclick="tg('mus')">🎵</button>
 </div>
 
-<div class="screen on" id="s0">
+<div class="screen on" id="sL">
+  <div class="hero">🔐</div>
+  <div class="brand-banner">
+    <h1>Infinity Learn</h1>
+    <div class="by-text">by Sri Chaitanya Educational Institutions</div>
+  </div>
+  <p class="sub">Please log in to continue</p>
+  <input class="inp" id="lp" type="password" placeholder="Password" autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()">
+  <div id="le" style="color:var(--bad);font-weight:700;margin-top:6px;min-height:24px"></div>
+  <button class="big" style="margin-top:6px" onclick="doLogin()">Login</button>
+</div>
+
+<div class="screen" id="s0">
   <div class="hero">♾️</div>
   <div class="brand-banner">
     <h1>Infinity Learn</h1>
     <div class="by-text">by Sri Chaitanya Educational Institutions</div>
   </div>
   <p class="sub">Roar through Maths, English &amp; EVS and collect stickers 🎉</p>
+  <div class="lab">👋 Test giver name</div>
+  <input class="inp" id="nmTaker" maxlength="40" placeholder="Type the student's name here">
   <div class="lab">Subject</div>
   <div class="seg">
     <button class="on" onclick="sel('sub','Maths',this)">➗ Maths</button>
@@ -131,10 +157,11 @@ background:linear-gradient(135deg,#ffd166,#ff8fab 55%,#a78bfa);background-attach
     <button onclick="sel('cnt',50,this)">Max 50</button>
   </div>
   <button class="big" onclick="start()">Let's Play! 🚀</button>
+  <button class="lnk" onclick="doLogout()">Logout</button>
 </div>
 
 <div class="screen" id="s1">
-  <div class="top"><span class="pill" id="bd"></span><span class="pill f" id="stk">🔥 0</span><span class="pill s" id="sc">⭐ 0</span></div>
+  <div class="top"><span class="pill" id="nmp" style="background:var(--pink)"></span><span class="pill" id="bd"></span><span class="pill f" id="stk">🔥 0</span><span class="pill s" id="sc">⭐ 0</span></div>
   <div class="bar"><div id="pg"></div></div>
   <div id="shelf"></div>
   <div class="mas" id="mas"><span>🦁</span><div class="bub" id="say">Let's go!</div></div>
@@ -151,6 +178,7 @@ background:linear-gradient(135deg,#ffd166,#ff8fab 55%,#a78bfa);background-attach
   <h1 id="rt">Shabash!</h1>
   <div class="stars" id="rs"></div>
   <p class="sub" id="rp"></p>
+  <div id="cert"></div>
   <div class="haul" id="hl"></div>
   <button class="big" onclick="start()">Play Again 🔄</button>
   <button class="big" style="background:var(--teal)" onclick="quitToHome()">Change Subject / Class</button>
@@ -159,6 +187,20 @@ background:linear-gradient(135deg,#ffd166,#ff8fab 55%,#a78bfa);background-attach
 </div>
 
 <script>
+/* ---------- CONFIG: edit these ---------- */
+const CFG={
+  PASSWORD:'maverick'    // login password (not case-sensitive)
+};
+let bestSt=0,NAME='';
+const kid=()=>$('nmTaker').value.trim().replace(/\b\w/g,c=>c.toUpperCase());
+const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function doLogin(){
+  if($('lp').value.trim().toLowerCase()===CFG.PASSWORD.toLowerCase()){
+    try{sessionStorage.setItem('qzUser','1')}catch(e){}
+    $('le').textContent='';$('lp').value='';show('s0');
+  }else $('le').textContent='Wrong password, try again';
+}
+function doLogout(){try{sessionStorage.removeItem('qzUser')}catch(e){}show('sL')}
 const S={sub:'Maths',cls:'Class 1',brd:'CBSE',cnt:10};
 let rng,Q=[],i=0,sc=0,st=0,ok=0,done=false,AC,mute=false,musOn=true,bg,stk=[];
 const $=id=>document.getElementById(id);
@@ -278,7 +320,7 @@ const gens=()=>{
 };
 
 function build(){
-  rng=seed((+S.cls.slice(-1))*97+(S.brd=='CBSE'?1:2)*1013+['Maths','English','EVS'].indexOf(S.sub)*31+Date.now());
+  rng=seed((+S.cls.slice(-1))*97+(S.brd=='CBSE'?1:2)*1013+['Maths','English','EVS'].indexOf(S.sub)*31);
   const g=gens(),seen=new Set(),out=[];
   for(let n=0;n<4000&&out.length<50;n++){const q=g[ri(0,g.length-1)]();const k=q.t+q.v;if(!seen.has(k)){seen.add(k);q.pts=10;out.push(q)}}
   return out;
@@ -331,16 +373,17 @@ function quitToHome(){
 }
 
 function start(){
-  Q=shr(build()).slice(0,S.cnt);i=0;sc=0;st=0;ok=0;stk=[];
+  if(!kid()){alert('Please type your name first 😊');$('nmTaker').focus();return}
+  Q=build().slice(0,S.cnt);i=0;sc=0;st=0;ok=0;stk=[];bestSt=0;NAME=kid();$('nmp').textContent='👤 '+NAME;
   $('bd').textContent=`${S.sub=='EVS'?'EVS & GK':S.sub} • ${S.cls} • ${S.brd}`;
-  show('s1');play('tap');bgm();load();talk('Let\'s go, champ!');
+  show('s1');play('tap');bgm();load();talk(`Let's go, ${NAME}!`);
 }
 function load(){
   done=false;const q=Q[i];
   $('qt').textContent=`${i+1}. ${q.t}`;
   const v=$('vis');v.innerHTML=q.v;v.style.display=q.v?'flex':'none';
   $('opts').innerHTML='';
-  q.o.forEach(o=>{const b=document.createElement('button');b.className='opt';b.textContent=o;b.onclick=()=>pick(b,o);$('opts').appendChild(b)});$('ex').style.display='none';$('nx').style.display='none';$('say').textContent=i==0?'Let\'s go! Win stickers 🎁':rp(['You can do it! 💪','Think carefully 🤔','Take your time 🌈','Ready? Go! 🚀']);
+  q.o.forEach(o=>{const b=document.createElement('button');b.className='opt';b.textContent=o;b.onclick=()=>pick(b,o);$('opts').appendChild(b)});$('ex').style.display='none';$('nx').style.display='none';$('say').textContent=i==0?`Let's go, ${NAME}! Win stickers 🎁`:rp(['You can do it! 💪','Think carefully 🤔','Take your time 🌈','Ready? Go! 🚀']);
   $('pg').style.width=i/Q.length*100+'%';
   $('sc').textContent='⭐ '+sc;$('stk').textContent='🔥 '+st;
   $('shelf').innerHTML=stk.join(' ')+(stk.length?'':'<small>Answer right to collect stickers!</small>');
@@ -349,7 +392,7 @@ function pick(b,o){
   if(done)return;done=true;const q=Q[i],good=o===q.a;
   document.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.textContent===q.a)x.classList.add('ok')});
   let msg;
-  if(good){sc+=10+Math.min(st,5)*2;st++;ok++;stk.push(rp(ST));play('ok',st);confetti(10+Math.min(st,5)*4);
+  if(good){sc+=10+Math.min(st,5)*2;st++;ok++;bestSt=Math.max(bestSt,st);stk.push(rp(ST));play('ok',st);confetti(10+Math.min(st,5)*4);
     msg=STREAK[Math.min(st,5)]&&st>1?STREAK[Math.min(st,5)]:rp(CHEER)+' 🎉';
     const m=$('mas');m.classList.remove('hop');void m.offsetWidth;m.classList.add('hop')}
   else{b.classList.add('no');st=0;play('no');msg=rp(OOPS)}
@@ -363,14 +406,37 @@ function pick(b,o){
 }
 function next(){play('tap');i++;i<Q.length?load():finish()}
 function finish(){
-  const p=ok/Q.length,s=p>=.9?3:p>=.6?2:p>=.3?1:0;
+  const n=Q.length,p=ok/n,s=p>=.9?3:p>=.6?2:p>=.3?1:0,c=+S.cls.slice(-1),pc=Math.round(p*100),lv=p>=.9?0:p>=.6?1:p>=.3?2:3;
+  const sub=`${S.cls} • ${S.sub=='EVS'?'EVS & GK':S.sub} • ${S.brd}`,date=new Date().toLocaleDateString('en-IN');
+  let k,hero,top,rank,head,msg,extra='';
+  if(c<=2){ /* little kids: jungle animals */
+    k='a';top='⭐ STAR CERTIFICATE ⭐';hero=['🦁','🐯','🐰','🐣'][lv];
+    rank=['Lion King 🦁','Tiger Cub 🐯','Bunny Hopper 🐰','Little Chick 🐣'][lv];
+    head=[`Roarrr! You did it, ${NAME}! 🎉`,`Wow ${NAME}, super job! 🌟`,`Good hopping, ${NAME}! 🐰`,`Nice try, ${NAME}! 🐣`][lv];
+    msg=['Everybody in the jungle is clapping for you! 👏','Almost a lion! A few more tries and you will roar louder! 🐯','Hop hop hooray! Every hop makes you stronger. Try again! 🥕','Little chicks grow into big eagles! Let\'s play again and win more stickers! 🐥'][lv];
+    extra=`You won ${stk.length} sticker${stk.length==1?'':'s'}! Show your parents 🎈`;
+  }else if(c==3){ /* middle: superheroes */
+    k='b';top='🦸 HERO CARD 🦸';hero=['🦸','⚡','🚀','🌱'][lv];
+    rank=['Super Genius 🦸','Power Star ⚡','Rising Hero 🚀','Hero in Training 🌱'][lv];
+    head=[`Mission complete, ${NAME}! 🦸`,`Great work, ${NAME}! ⚡`,`You are rising, ${NAME}! 🚀`,`Keep training, ${NAME}! 🌱`][lv];
+    msg=['Top score! The city is safe thanks to your brain power! 🧠','Strong powers! One more try to unlock Super Genius.','Your powers are growing. Replay the mission to level up!','Every superhero starts somewhere. Read the tricks and try again!'][lv];
+    extra=`Power points: ${sc} ⚡ • Hero stickers: ${stk.length}`;
+  }else{ /* older kids: achievements, levels, goals */
+    k='c';top='🏆 ACHIEVEMENT UNLOCKED';hero=['🏆','🥇','📈','🎯'][lv];
+    rank=['Quiz Grandmaster 🏆','Scholar 🥇','Contender 📈','Practice Mode 🎯'][lv];
+    head=[`Achievement unlocked, ${NAME}! 🏆`,`Level up, ${NAME}! 🥇`,`Solid effort, ${NAME}! 📈`,`Keep grinding, ${NAME}! 🎯`][lv];
+    msg=['Outstanding accuracy. Try a bigger set or the next class for a tougher challenge.','Strong performance. Fix the ones you missed and you will hit Grandmaster.','You are in the game. Review the explanations for the misses, then replay to beat your score.','Everyone starts in practice mode. Read each explanation and replay.'][lv];
+    extra=ok<n?`🎯 Next goal: beat ${ok}/${n} — the questions stay the same, so you can measure your progress.`:'💯 Perfect score! Can you do it again with a bigger set?';
+  }
+  document.querySelector('#s2 .hero').textContent=hero;
   $('rs').textContent='⭐'.repeat(s)+'☆'.repeat(3-s);
-  const t=p>=.9?'Shabash, Champion!':p>=.6?'Wah! Well done!':'Good try! Every champion practises!';
-  $('rt').textContent=t;
-  $('rp').textContent=`${ok} out of ${Q.length} correct • ${sc} points`;
-  $('hl').innerHTML=stk.length?`Your stickers:<br>${stk.join(' ')}`:'Play again to win your first sticker! 🎁';
-  show('s2');play('win');talk(t);if(s>0)confetti(50);
+  $('rt').textContent=head;
+  $('rp').textContent=`${ok} out of ${n} correct • ${sc} points`;
+  $('cert').innerHTML=`<div class="cert ${k}"><div class="cert-top">${top}</div><div class="cert-name">${esc(NAME)}</div><div class="cert-sub">${esc(sub)} • ${date}</div><div class="cert-rank">${rank}</div><div class="cert-line">${ok} / ${n} correct • ${pc}% • 🔥 best streak ${bestSt}</div><div class="cert-msg">${msg}</div></div>`;
+  $('hl').innerHTML=(extra?`<div style="font-size:1rem;font-weight:700;margin-bottom:6px">${extra}</div>`:'')+(stk.length?`${c<=3?'Your stickers':'Badges earned'}:<br>${stk.join(' ')}`:'Play again to win your first sticker! 🎁');
+  show('s2');play('win');talk(head);if(s>0)confetti(50);
 }
+try{if(sessionStorage.getItem('qzUser'))show('s0')}catch(e){}
 </script>
 </body>
 </html>
